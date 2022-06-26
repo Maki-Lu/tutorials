@@ -56,7 +56,9 @@ Try to figure out what happens.
 -- 0003
 example (a b c : ℝ) : a * (b * c) = b * (a * c) :=
 begin
-  sorry
+  rw ← mul_assoc,
+  rw mul_comm a b,
+  rw mul_assoc
 end
 
 /-
@@ -87,7 +89,10 @@ And the next one can use:
 -- 0004
 example (a b c d : ℝ) (hyp : c = b*a - d) (hyp' : d = a*b) : c = 0 :=
 begin
-  sorry
+  rw hyp' at hyp,
+  rw mul_comm b a at hyp,
+  rw sub_self at hyp,
+  exact hyp,
 end
 
 /-
@@ -122,7 +127,10 @@ Let's return to the other example using this method.
 -- 0005
 example (a b c d : ℝ) (hyp : c = b*a - d) (hyp' : d = a*b) : c = 0 :=
 begin
-  sorry
+  calc c = b*a - d : by rw hyp
+  ... = b*a - a*b : by rw hyp'
+  ... = a*b - a*b: by rw mul_comm
+  ... = 0 : by rw sub_self,
 end
 
 /-
