@@ -21,7 +21,7 @@ This is already defined in mathlib (in a more general context), but we repeat
 it for the sake of exposition. Right-click "upper_bounds" below to get offered
 to jump to mathlib's version
 -/
-#check upper_bounds
+
 
 /-- The set of upper bounds of a set of real numbers ℝ -/
 def up_bounds (A : set ℝ) := { x : ℝ | ∀ a ∈ A, a ≤ x}
