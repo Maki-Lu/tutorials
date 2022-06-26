@@ -117,7 +117,8 @@ the pieces.
 -- 0011
 example (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) : 0 ≤ a + b :=
 begin
-  sorry
+  calc 0 ≤ a+0: le_add_of_nonneg_left ha
+  ... ≤ a+b: add_le_add_left hb a,
 end
 
 /- And let's combine with our earlier lemmas. -/
@@ -125,7 +126,8 @@ end
 -- 0012
 example (a b c d : ℝ) (hab : a ≤ b) (hcd : c ≤ d) : a + c ≤ b + d :=
 begin
- sorry
+  calc a+c ≤ b+c: add_le_add_right hab c
+  ... ≤ b+d: add_le_add_left hcd b,
 end
 
 /-
