@@ -130,7 +130,7 @@ begin
   calc c = b*a - d : by rw hyp
   ... = b*a - a*b : by rw hyp'
   ... = a*b - a*b: by rw mul_comm
-  ... = 0 : by rw sub_self,
+  ... = 0 : by rw sub_self, 
 end
 
 /-
