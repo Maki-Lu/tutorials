@@ -294,7 +294,7 @@ begin
     -- Lean will write what it found in the Lean message window when cursor is on
     -- that line, so that we can replace it by the lemma. We see `le_abs_self`, which
     -- says `a ≤ |a|`, exactly what we're looking for.
-  ... ≤ x + |u N - x| : add_le_add (by linarith) (by library_search)
+  ... ≤ x + |u N - x| : add_le_add (by linarith) (le_abs_self (u N - x))
   ... ≤ x + ε         : add_le_add (by linarith) (HN N (by linarith)),
 end
 
@@ -319,7 +319,7 @@ begin
   -- a positive number is positive, let's state that is suffices
   -- to prove that `n+1`, seen as a real number, is positive, and ask `library_search`
   suffices : (n + 1 : ℝ) > 0,
-  { library_search },
+  { exact one_div_pos.mpr this},
   -- Now we want to reduce to a statement about natural numbers, not real numbers
   -- coming from natural numbers.
   norm_cast,
