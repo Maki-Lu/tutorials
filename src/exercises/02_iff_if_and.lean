@@ -153,8 +153,7 @@ begin
   rw key,
   apply mul_nonneg, -- Here we don't provide proofs for the lemma's assumptions
   -- Now we need to provide the proofs.
-  { rw sub_nonneg,
-    exact hab },
+  { rw sub_nonneg, exact hab },
   { exact hc },
 end
 
@@ -228,7 +227,9 @@ Let's now practice all three styles using:
 -- 0013
 example (a b c : ℝ) (hc : c ≤ 0) (hab :  a ≤ b) : b*c ≤ a*c :=
 begin
-  sorry
+  rw ← sub_nonneg,
+  calc 0 ≤ (a-b)*c: mul_nonneg_of_nonpos_of_nonpos (by rwa sub_nonpos) hc
+  ... = a*c - b*c: by ring,
 end
 
 /- Using forward reasoning -/
