@@ -157,7 +157,7 @@ Of course we can use `ring` outside of `calc`. Let's do the next one in one line
 -- 0006
 example (a b c : ℝ) : a * (b * c) = b * (a * c) :=
 begin
-  sorry
+  exact by ring,
 end
 
 /-
@@ -167,7 +167,7 @@ This is too much fun. Let's do it again.
 -- 0007
 example (a b : ℝ) : (a + b) + a = 2*a + b :=
 begin
-  sorry
+  exact by ring,
 end
 
 /-
@@ -184,7 +184,21 @@ add_zero a : a + 0 = a
 -- 0008
 example (a b : ℝ) : (a + b)*(a - b) = a^2 - b^2 :=
 begin
-  sorry
+  rw pow_two a,
+  rw pow_two b,
+  rw add_mul,
+  rw mul_sub,
+  rw mul_sub,
+  suffices : a * b - (b * a - b * b) = b*b,
+  {
+    rw sub_add,
+    rw this,
+  },
+  rw ← sub_add,
+  rw mul_comm b a,
+  rw sub_self,
+  rw add_comm,
+  rw add_zero,
 end
 
 /- Let's stick to ring in the end. -/
