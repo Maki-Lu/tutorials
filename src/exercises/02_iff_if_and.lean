@@ -42,7 +42,11 @@ Let's prove a variation (without invoking commutativity of addition since this w
 -- 0009
 example {a b : ℝ} (hab : a ≤ b) (c : ℝ) : a + c ≤ b + c :=
 begin
-  sorry
+  have key: c+a ≤ c+b,
+  { exact add_le_add_left hab c},
+  rw add_comm,
+  rw add_comm b c,
+  exact key,
 end
 
 
@@ -84,7 +88,8 @@ end
 -- 0010
 example (a b : ℝ) (hb : 0 ≤ b) : a ≤ a + b :=
 begin
-  sorry
+  calc a=a+0: by ring
+  ... ≤ a+b: add_le_add_left hb a,
 end
 
 /-
