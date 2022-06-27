@@ -482,16 +482,22 @@ open nat
 example (a b : ℕ) : a ∣ b ↔ gcd a b = a :=
 begin
   split,
-  {intro d,
+  {
+  intro d,
   apply dvd_antisymm,
-  have h₁:(gcd a b)∣ (gcd a b),
+  have h1: (gcd a b)∣ (gcd a b),
   {exact dvd_refl (gcd a b)},
-  suffices h₂: (gcd a b)∣ a ∧  (gcd a b)∣ b,
-  {cases h₂ with p q,
-  exact p,},
-  have h₂, from dvd_gcd_iff
+  have h2: (gcd a b) ∣ gcd a b ↔ (gcd a b) ∣ a ∧ (gcd a b) ∣ b,
+  {exact dvd_gcd_iff},
+  have h3: (gcd a b) ∣ gcd a b → (gcd a b) ∣ a ∧ (gcd a b) ∣ b,
+  {exact iff.elim_left h2},
+  have h4: (gcd a b) ∣ a ∧ (gcd a b) ∣ b,
+  {exact h3 h1},
+  have h5: (gcd a b) ∣ a,
+  {exact h4.1},
+  exact h5,
+  
   
   },
-  {},  
+  {},
 end
-
