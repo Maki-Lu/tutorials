@@ -46,7 +46,10 @@ variables (a b c : ℤ)
 -- 0029
 example (h₁ : a ∣ b) (h₂ : b ∣ c) : a ∣ c :=
 begin
-  sorry
+  rcases h₁ with ⟨k, rfl⟩,
+  rcases h₂ with ⟨l, rfl⟩,
+  use (k*l),
+  ring,
 end
 
 /-
@@ -84,7 +87,15 @@ end
 -- 0030
 example : 0 ∣ a ↔ a = 0 :=
 begin
-  sorry
+  split,
+  {
+    rintros ⟨k, rfl⟩,
+    ring,
+  },
+  {
+    intro h,
+    rw h,
+  },
 end
 
 /-
