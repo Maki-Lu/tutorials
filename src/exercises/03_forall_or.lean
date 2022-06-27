@@ -101,13 +101,18 @@ you can put your mouse cursor above the symbol and wait for one second.
 -- 0023
 example (f g : ℝ → ℝ) : even_fun f → even_fun (g ∘ f) :=
 begin
-  sorry
+  intros hf x,
+  calc (g ∘ f)(-x)=g(f(-x)): rfl
+  ... = g(f(x)): by rw hf,
 end
 
 -- 0024
 example (f g : ℝ → ℝ) : odd_fun f → odd_fun g →  odd_fun (g ∘ f) :=
 begin
-  sorry
+  intros hf hg x,
+  calc (g ∘ f)(-x)=g(f(-x)): rfl
+  ... = g(-f(x)): by rw hf
+  ... = -g(f(x)): by rw hg,
 end
 
 /-
@@ -157,6 +162,7 @@ This `specialize` tactic is mostly useful for exploration, or in preparation for
 in the assumption. One can very often replace its use by using more complicated expressions
 directly involving the original assumption, as in the next variation:
 -/
+
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) :=
 begin
   intros x₁ x₂ h,
@@ -167,6 +173,7 @@ end
 Since the above proof uses only `intros` and `exact`, we could very easily replace it by the
 raw proof term:
 -/
+
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) : non_decreasing (g ∘ f) :=
 λ x₁ x₂ h, hg (f x₁) (f x₂) (hf x₁ x₂ h)
 
@@ -189,13 +196,14 @@ begin
   -- which follows from our assumption on f
   apply hf,
   -- and on x₁ and x₂
-  exact h
+  exact h,
 end
 
 -- 0025
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) : non_increasing (g ∘ f) :=
 begin
-  sorry
+  intros x y h,
+  exact hg (f x) (f y) (hf x y h),
 end
 
 /-
@@ -236,7 +244,16 @@ end
 -- 0026
 example (x y : ℝ) : x^2 = y^2 → x = y ∨ x = -y :=
 begin
-  sorry
+  intro h,
+  have H: (x+y)*(x-y)=0,
+  {calc (x+y)*(x-y)=x^2-y^2: by ring
+  ... =0: by linarith,},
+  rw mul_eq_zero at H,
+  cases H with p q,
+  {right,
+  linarith},
+  {left,
+  linarith},
 end
 
 /-
@@ -247,7 +264,21 @@ In the next exercise, we can use:
 -- 0027
 example (f : ℝ → ℝ) : non_decreasing f ↔ ∀ x y, x < y → f x ≤ f y :=
 begin
-  sorry
+  split,
+  {
+    intros hyp x y h,
+    have k: x ≤ y,
+    {linarith},
+    exact hyp x y k,
+  },
+  {
+    intros hyp x y h,
+    have k: x = y ∨ x < y,
+    {exact eq_or_lt_of_le h},
+    cases k with k1 k2,
+    {rw k1},
+    {exact hyp x y k2},
+  },
 end
 
 /-
