@@ -165,8 +165,27 @@ example (hu : seq_limit u l) (hw : seq_limit w l)
 (h : ∀ n, u n ≤ v n)
 (h' : ∀ n, v n ≤ w n) : seq_limit v l :=
 begin
-  sorry
-
+  intros e e0,
+  cases hu e e0 with N1 h1,
+  cases hw e e0 with N2 h2,
+  use max N1 N2,
+  intros n hn,
+  specialize h n,
+  specialize h' n,
+  rw ge_max_iff at hn,
+  have k1: |u n - l| ≤ e, from h1 n (by linarith),
+  have k2: |w n - l| ≤ e, from h2 n (by linarith),
+  rw abs_le at k1, rw abs_le at k2,
+  have k3: -e ≤ v n - l,
+  {calc -e ≤ u n - l: k1.1
+  ... ≤ v n - l: by linarith
+  },
+  have k4: v n - l ≤ e,
+  {calc v n - l ≤ w n - l: by linarith
+  ... ≤ e: k2.2,
+  },
+  rw abs_le,
+  exact ⟨k3, k4⟩,
 end
 
 /- What about < ε? -/
@@ -174,7 +193,24 @@ end
 example (u l) : seq_limit u l ↔
  ∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| < ε :=
 begin
-  sorry
+  split,
+  {
+    intros h e e0,
+    cases h (e/2) (by linarith) with N Hn,
+    use N,
+    intros n hn,
+    specialize Hn n hn,
+    calc |u n - l| ≤ e/2: Hn
+      ...  < e: by linarith,
+  },
+  {
+    intros h e e0,
+    cases h e (by linarith) with N Hn,
+    use N,
+    intros n hn,
+    specialize Hn n hn,
+    exact le_of_lt Hn,
+  },
 end
 
 /- In the next exercise, we'll use
