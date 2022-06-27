@@ -114,7 +114,11 @@ variables (f g : ℝ → ℝ)
 -- 0031
 example (h : surjective (g ∘ f)) : surjective g :=
 begin
-  sorry
+  intro y,
+  specialize h y,
+  cases h with a p,
+  use (f a),
+  exact p,
 end
 
 /- 
