@@ -129,6 +129,15 @@ next exercise in four lines.
 -- 0032
 example (hf : surjective f) (hg : surjective g) : surjective (g ∘ f) :=
 begin
-  sorry
+  intro z,
+  specialize hg z,
+  cases hg with y p,
+  specialize hf y,
+  cases hf with x q,
+  use x,
+  rw ← p,
+  have: (g (f x))=g y,
+  {rw q},
+  rw ← this,
 end
 
