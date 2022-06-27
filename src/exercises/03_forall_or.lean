@@ -289,6 +289,28 @@ In the next exercise, we can use:
 -- 0028
 example (f : ℝ → ℝ) (h : non_decreasing f) (h' : ∀ x, f (f x) = x) : ∀ x, f x = x :=
 begin
-  sorry
+  intros x,
+  specialize h' x,
+  have k: (f x) ≤ x ∨ x ≤ (f x),
+  {exact le_total (f x) x},
+  cases k with k1 k2,
+  {
+    have l: (f x) = x ∨ (f x) < x,
+    {exact eq_or_lt_of_le k1},
+    cases l with l1 l2,
+    {exact l1},
+    have l: f(f x)<x,
+    {calc f(f x) ≤ f(x): by exact h (f x) x k1
+    ... <x: by exact l2},
+    linarith},
+  {
+    have l: (f x) = x ∨ (f x) > x,
+    {exact eq_or_gt_of_le k2},
+    cases l with l1 l2,
+    {exact l1},
+    have l: x<f(f x),
+    {calc x<f(x): by linarith
+    ...  ≤ f((f x)): by exact h x (f x) k2,},
+    linarith},
 end
 
