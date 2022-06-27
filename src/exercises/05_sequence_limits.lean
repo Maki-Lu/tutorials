@@ -222,7 +222,20 @@ eq_of_abs_sub_le_all (x y : ℝ) : (∀ ε > 0, |x - y| ≤ ε) → x = y
 -- 0037
 example : seq_limit u l → seq_limit u l' → l = l' :=
 begin
-  sorry
+  intros p q,
+  suffices: ∀ ε > 0, |l - l'| ≤ ε,
+    from eq_of_abs_sub_le_all l l' this,
+  intros e e0,
+  cases p (e/2) (by linarith) with N1 h1,
+  cases q (e/2) (by linarith) with N2 h2,
+  have k1: |u (max N1 N2)-l| ≤ e/2, from h1 (max N1 N2) (le_max_left N1 N2),
+  have k2: |u (max N1 N2)-l'| ≤ e/2, from h2 (max N1 N2) (le_max_right N1 N2),
+  have k3: | l - u (max N1 N2) |=|  u (max N1 N2) - l |, by apply abs_sub_comm,
+  calc | l-l' | = | (u (max N1 N2)-l') + (l - u (max N1 N2)) |: by congr' 1 ; ring
+  ... ≤ | (u (max N1 N2)-l' ) | + | l - u (max N1 N2) |: by apply abs_add
+  ... = | (u (max N1 N2)-l' ) | + | u (max N1 N2) - l |: by linarith
+  ... ≤ e/2+e/2: add_le_add k2 k1
+  ... = e: by ring,
 end
 
 /-
@@ -238,6 +251,26 @@ def is_seq_sup (M : ℝ) (u : ℕ → ℝ) :=
 example (M : ℝ) (h : is_seq_sup M u) (h' : non_decreasing u) :
 seq_limit u M :=
 begin
-  sorry
+  intros e e0,
+  have k: ∃ n₀, u n₀ ≥ M - e,
+    from h.2 e (by linarith),
+  cases k with n₀ p,
+  use n₀,
+  intros n hn,
+  rw abs_le,
+  split,
+  {
+    have k1: u n₀ ≤ u n,
+      from h' n₀ n hn,
+    calc -e ≤ u n₀ - M: by linarith
+    ... ≤ u n -M: by linarith,
+  },
+  {
+    have: u n ≤ M + e,
+    {calc u n ≤ M: h.1 n
+    ... ≤ M + e: by linarith},
+    linarith,
+  },
 end
+
 
