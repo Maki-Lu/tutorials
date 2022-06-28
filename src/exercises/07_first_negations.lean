@@ -308,7 +308,10 @@ end
 -- 0053
 example (x : ℝ) : (∀ ε > 0, x ≤ ε) → x ≤ 0 :=
 begin
-  sorry
+  contrapose!,
+  intro h,
+  use x/2,
+  exact ⟨by linarith, by linarith⟩,
 end
 
 /-
@@ -322,6 +325,24 @@ Let's use this trick, together with:
 -- 0054
 example (f : ℝ → ℝ) : (∀ x y, x < y → f x < f y) ↔ (∀ x y, (x ≤ y ↔ f x ≤ f y)) :=
 begin
-  sorry
+  split,
+  { intros hyp x y,
+    split,
+    { intro h,
+      cases eq_or_lt_of_le h with h1 h2,
+      { rw h1 },
+      { have : f x < f y,
+        {exact hyp x y (h2)},
+        by linarith},
+    },
+    { contrapose!,
+      exact hyp y x,},
+  },
+  { intros hyp x y,
+    specialize hyp y x,
+    contrapose!,
+    cases hyp with h1 h2,
+    exact h2,
+  },
 end
 
