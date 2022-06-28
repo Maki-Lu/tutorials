@@ -153,7 +153,18 @@ In the next exercise, we'll use
 -- 0048
 example (n : ℤ) : even (n^2) ↔ even n :=
 begin
-  sorry
+  split,
+  { contrapose,
+    rw ← int.odd_iff_not_even,
+    rw ← int.odd_iff_not_even,
+    rintro ⟨ k, rfl⟩ ,
+    use 2*k^2+2*k,    
+    ring,
+  },
+  { rintro ⟨ k, rfl ⟩,
+    use (2*k^2),
+    ring,
+  },
 end
 /-
 As a last step on our law of the excluded middle tour, let's notice that, especially
@@ -195,7 +206,20 @@ end
 -- 0049
 example : ¬ (P ∧ Q) ↔ ¬ P ∨ ¬ Q :=
 begin
-  sorry
+  split,
+  { intro h,
+    by_cases hp: P,
+    have: ¬ Q,
+    {intro Q, exact h ⟨hp, Q⟩},
+    right, exact this,
+    left, exact hp,
+  },
+  { intros h h',
+    cases h' with p q,    
+    cases h with np nq,
+    exact np p,
+    exact nq q,
+  },
 end
 
 /-
@@ -207,7 +231,18 @@ In the first exercise, only the definition of negation is needed.
 -- 0050
 example (n : ℤ) : ¬ (∃ k, n = 2*k) ↔ ∀ k, n ≠ 2*k :=
 begin
-  sorry
+  split,
+  { intros h k k',
+    have p: ∃ (k : ℤ), n = 2 * k,
+    {use k, exact k'},
+    exact h p,
+  },
+  { intro hyp,
+    by_contra key,
+    cases key with k nk,
+    have key' := hyp k,
+    exact key' nk,
+  },
 end
 
 /-
