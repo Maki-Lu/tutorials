@@ -25,7 +25,7 @@ def seq_limit (u : ℕ → ℝ) (l : ℝ) : Prop :=
 
 You can also use a property proved in the previous file:
 
-unique_limit : seq_limit u l → seq_limit u l' → l = l'
+unique_limit : seq_limit u l → seq_limit u l' → l = l                   '
 
 def extraction (φ : ℕ → ℕ) := ∀ n m, n < m → φ n < φ m
 -/
@@ -52,7 +52,12 @@ inputs. -/
 -- 0039
 lemma extraction_ge : extraction φ → ∀ N N', ∃ n ≥ N', φ n ≥ N :=
 begin
-  sorry
+  intros hyp N N',
+  use max N N',
+  split,
+  exact le_max_right N N',
+  calc  φ (max N N') ≥ max N N': id_le_extraction' hyp (max N N')
+  ... ≥ N: le_max_left N N',
 end
 
 /-- A real number `a` is a cluster point of a sequence `u` 
@@ -79,7 +84,19 @@ One gets used to it. Alternatively, one can get rid of it using the lemma
 lemma near_cluster :
   cluster_point u a → ∀ ε > 0, ∀ N, ∃ n ≥ N, |u n - a| ≤ ε :=
 begin
-  sorry
+  intros hyp e e0 N,
+  cases hyp with φ k,
+  cases k.2 e (by linarith) with N' hN,
+  use φ (max N N'),
+  split,
+  have k: φ (max N N') ≥ N,
+  {calc φ (max N N') ≥ (max N N'): id_le_extraction' k.1 (max N N')
+  ... ≥ N: le_max_left N N',
+  },
+  exact k,
+  have k': max N N' ≥ N',
+  {exact le_max_right N N'},
+  exact hN (max N N') k',
 end
 
 /-
