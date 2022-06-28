@@ -49,13 +49,22 @@ open int
 -- 0045
 example (n : ℤ) (h_even : even n) (h_not_even : ¬ even n) : 0 = 1 :=
 begin
-  sorry
+  have := h_not_even h_even,
+  exfalso,
+  exact this,
 end
 
 -- 0046
 example (P Q : Prop) (h₁ : P ∨ Q) (h₂ : ¬ (P ∧ Q)) : ¬ P ↔ Q :=
 begin
-  sorry
+  split,
+  { intro h,
+    cases h₁ with p q,
+    { exfalso,
+      exact h p},
+    { exact q}, },
+  {intros hq hp,
+  exact h₂ ⟨hp, hq⟩},
 end
 
 /-
@@ -77,7 +86,7 @@ add Hyp : ¬ P to the local context.
 
 Let's return to a proof from the 5th file: uniqueness of limits for a sequence.
 This cannot be proved without using some version of the excluded middle
-axiom. We used it secretely in
+axiom. We used it secretly in
 
 eq_of_abs_sub_le_all (x y : ℝ) : (∀ ε > 0, |x - y| ≤ ε) → x = y
 
@@ -120,7 +129,9 @@ non Q ⇒ non P.
 -- 0047
 example (P Q : Prop) (h : ¬ Q → ¬ P) : P → Q :=
 begin
-  sorry
+  intro p,
+  by_contra nq,
+  exact (h nq) p,
 end
 
 /-
