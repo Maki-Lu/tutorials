@@ -102,14 +102,23 @@ existential statements.
 lemma subseq_tendsto_of_tendsto' (h : seq_limit u l) (hφ : extraction φ) :
 seq_limit (u ∘ φ) l :=
 begin
-  sorry
+  intros e e0,
+  cases h e e0 with N hN,
+  use N,
+  intros n hn,
+  have k: φ n ≥ N,
+  {calc φ n ≥ n: id_le_extraction' hφ n
+  ... ≥ N: by linarith},
+  exact hN (φ n) k,
 end
 
 /-- If `u` tends to `l` all its cluster points are equal to `l`. -/
 -- 0042
 lemma cluster_limit (hl : seq_limit u l) (ha : cluster_point u a) : a = l :=
 begin
-  sorry
+  rcases ha with ⟨φ, φ_extr, lim_a⟩,
+  have k: seq_limit (u ∘ φ) l, from subseq_tendsto_of_tendsto' hl φ_extr,
+  exact unique_limit lim_a k,
 end
 
 /-- Cauchy_sequence sequence -/
@@ -118,7 +127,15 @@ def cauchy_sequence (u : ℕ → ℝ) := ∀ ε > 0, ∃ N, ∀ p q, p ≥ N →
 -- 0043
 example : (∃ l, seq_limit u l) → cauchy_sequence u :=
 begin
-  sorry
+  intros conv e e0,
+  cases conv with l lim,
+  cases lim (e/2) (by linarith) with N hN,
+  use N,
+  intros p q hp hq,
+  calc |u p - u q|= |(u p - l) + (l - u q)|: by congr' 1; ring
+  ... ≤ |(u p - l)| + |l - u q|: by apply abs_add
+  ... = |(u p - l)| + |u q - l|: by rw abs_sub_comm (u q) l
+  ... ≤ e: by linarith [(hN p hp), (hN q hq)],
 end
 
 
