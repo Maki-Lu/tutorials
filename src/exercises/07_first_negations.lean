@@ -232,16 +232,11 @@ In the first exercise, only the definition of negation is needed.
 example (n : ℤ) : ¬ (∃ k, n = 2*k) ↔ ∀ k, n ≠ 2*k :=
 begin
   split,
-  { intros h k k',
-    have p: ∃ (k : ℤ), n = 2 * k,
-    {use k, exact k'},
-    exact h p,
+  { intros h k nk,
+    exact h ⟨k,nk⟩,
   },
-  { intro hyp,
-    by_contra key,
-    cases key with k nk,
-    have key' := hyp k,
-    exact key' nk,
+  { rintro h ⟨k, rfl⟩,
+    exact h k rfl,
   },
 end
 
@@ -258,7 +253,19 @@ def even_fun (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 -- 0051
 example (f : ℝ → ℝ) : ¬ even_fun f ↔ ∃ x, f (-x) ≠ f x :=
 begin
-  sorry
+  split,
+  { 
+    contrapose,
+    rintro h,
+    rw not_not,
+    intro x,
+    by_contra k,
+    apply h,
+    use x,
+  },
+  { rintros ⟨x,hx⟩ k,
+    exact hx (k x),
+  },
 end
 
 /-
@@ -277,7 +284,13 @@ end
 -- 0052
 example (f : ℝ → ℝ) : ¬ even_fun f ↔ ∃ x, f (-x) ≠ f x :=
 begin
-  sorry
+  split,
+  contrapose!,
+  intro h,
+  exact h,
+  contrapose!,
+  intro h,
+  exact h,
 end
 
 def bounded_above (f : ℝ → ℝ) := ∃ M, ∀ x, f x ≤ M
