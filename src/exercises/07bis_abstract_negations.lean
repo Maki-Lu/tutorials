@@ -60,17 +60,14 @@ begin
   split,
   { 
     intro np,
-    admit,
-    suffices: ¬P = true,
-    
-
-
-    by_contra p,
-    
-  
+    apply propext,
+    split,
+    { apply np },
+    { intro h, exfalso, exact h },
   },
-  {
-
+  { intro np,
+    rw np,
+    exact id,
   },
 end
 
@@ -82,25 +79,63 @@ variables (X : Type) (P : X → Prop)
 -- 0058
 example : ¬ (∀ x, P x) ↔ ∃ x, ¬ P x :=
 begin
-  sorry
+  split,
+  { intro hyp,
+    by_contra k,
+    apply hyp,
+    intros x,
+    by_contra npx,
+    apply k,
+    use x,
+  },
+  { rintros ⟨x,npx⟩ apx,
+    exact npx (apx x),
+  },
 end
 
 -- 0059
 example : ¬ (∃ x, P x) ↔ ∀ x, ¬ P x :=
 begin
-  sorry
+  split,
+  { intros hyp x px,
+    apply hyp,
+    use x,
+    exact px,
+  },
+  { rintros hyp ⟨x, px⟩,
+    exact hyp x px,
+  },
 end
 
 -- 0060
 example (P : ℝ → Prop) : ¬ (∃ ε > 0, P ε) ↔ ∀ ε > 0, ¬ P ε :=
 begin
-  sorry
+  split,
+  { intros hyp e e0 pe,
+    apply hyp,
+    use e, exact ⟨e0, pe⟩,
+  },
+  { rintros hyp ⟨e, e0, pe⟩,
+    exact hyp e e0 pe,
+  },
 end
 
 -- 0061
 example (P : ℝ → Prop) : ¬ (∀ x > 0, P x) ↔ ∃ x > 0, ¬ P x :=
 begin
-  sorry
+  split,
+  { intro hyp,
+    by_contra k,
+    apply hyp,
+    intros x x0,
+    by_contra npx,
+    apply k,
+    use x,
+    exact ⟨x0, npx⟩,
+  },
+  { rintros ⟨x, x0, npx⟩ apx,
+    exact npx (apx x x0),
+  },
 end
 
 end negation_quantifiers
