@@ -146,6 +146,22 @@ In the next exercise, you can reuse
 -- 0044
 example (hu : cauchy_sequence u) (hl : cluster_point u l) : seq_limit u l :=
 begin
-  sorry
+  intros e e0,
+  rcases hl with ⟨φ, φ_extr, sub_lim⟩,
+  cases sub_lim (e/2) (by linarith) with N1 hN1,
+  cases hu (e/2) (by linarith) with N2 hN2,
+  use max N1 N2,
+  intros n hn,
+  have k := 
+    calc N2 ≤ max N1 N2: le_max_right N1 N2
+    ... ≤ n: by linarith
+    ... ≤ φ n: id_le_extraction' φ_extr n,
+  have k1: |u n - u (φ n) | ≤ e/2,
+  {exact hN2 n (φ n) (by linarith[le_max_right N1 N2]) k},
+  have k2: |u (φ n) - l | ≤ e/2,
+  {exact hN1 n (by linarith[le_max_left N1 N2])},
+  calc |u n - l| = |u n - u (φ n) + (u (φ n)-l ) |: by congr' 1; ring
+  ... ≤ |u n - u (φ n) | + | (u (φ n)-l ) |: by apply abs_add
+  ... ≤ e: by linarith,
 end
 
