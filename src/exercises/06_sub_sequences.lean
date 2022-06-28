@@ -85,18 +85,10 @@ lemma near_cluster :
   cluster_point u a → ∀ ε > 0, ∀ N, ∃ n ≥ N, |u n - a| ≤ ε :=
 begin
   intros hyp e e0 N,
-  cases hyp with φ k,
-  cases k.2 e (by linarith) with N' hN,
-  use φ (max N N'),
-  split,
-  have k: φ (max N N') ≥ N,
-  {calc φ (max N N') ≥ (max N N'): id_le_extraction' k.1 (max N N')
-  ... ≥ N: le_max_left N N',
-  },
-  exact k,
-  have k': max N N' ≥ N',
-  {exact le_max_right N N'},
-  exact hN (max N N') k',
+  rcases hyp with ⟨φ, φ_extr, hφ⟩,
+  cases hφ e e0 with N' hN',
+  rcases extraction_ge φ_extr N N' with ⟨q, hq, hq'⟩,
+  exact ⟨φ q, hq', hN' _ hq⟩, 
 end
 
 /-
