@@ -104,7 +104,7 @@ begin
 end
 
 /- 全称量词 -/
-example (P: ℝ → Prop) ∀ x : ℝ , P x:=
+example (P: (ℝ → Prop)) (∀ x : ℝ , P x) :=
 begin
   suffices q: Q,
     exact qr q,
