@@ -30,7 +30,13 @@ Let's start with a variation on a known exercise.
 lemma le_lim {x y : ℝ} {u : ℕ → ℝ} (hu : seq_limit u x)
   (ineg : ∃ N, ∀ n ≥ N, y ≤ u n) : y ≤ x :=
 begin
-  sorry
+  by_contra' xy,
+  cases hu ((y-x)/2) (by linarith) with N1 hN,
+  cases ineg with N2 yun,
+  specialize hN (max N1 N2) (by apply le_max_left),
+  specialize yun (max N1 N2) (by apply le_max_right),
+  rw abs_le at hN,
+  by linarith,
 end
 
 /-
@@ -83,14 +89,17 @@ begin
   split,
   { intro h,
     split,
-    {
-      sorry
-    },
+    { exact h.1 },
     { have : ∀ n : ℕ, ∃ a ∈ A, x - 1/(n+1) < a,
       { intros n,
         have : 1/(n+1 : ℝ) > 0,
           exact nat.one_div_pos_of_nat,
-        sorry
+        have k: x - 1/(n+1 : ℝ) < x,
+          from by linarith,
+        by_contra' k',
+        have k'': upper_bound A (x - 1/(n+1 : ℝ)), from k',
+        have k''':= h.2 (x - 1/(n+1 : ℝ)) k'',
+        by linarith,
       },
       choose u hu using this,
       sorry
