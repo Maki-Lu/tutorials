@@ -14,6 +14,12 @@ begin
 end
 
 /- 条件用了全称量词 -/
+example (P: ℝ → Prop) (Px: ∀ x, P x): P 5 :=
+begin
+  specialize Px 5,
+  exact Px,
+end
+
 
 example (P: ℝ → ( ℝ → Prop)) (Pxy: ∀ x, ∀ y, P x y): P 2 3 :=
 begin
