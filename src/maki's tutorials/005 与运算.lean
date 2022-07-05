@@ -47,21 +47,15 @@ end
 /- 条件用了与运算 -/
 example (P Q: Prop) (pq: P ∧ Q): P :=
 begin
-  rintros pq, ⟨p, q⟩,
-
+  cases pq with p q,
+  exact p,
 end
 
-example (P Q R: Prop) (p: P) (q: Q) (r: R): P ∧ Q ∧ R:=
+example (P Q R: Prop) (pqr: P ∧ Q ∧ R): Q :=
 begin
-  exact ⟨p, q, r⟩,
+  cases pqr with p qr,
+  cases qr with q r,
+  exact q,
 end
 
-example (P Q R: Prop) (p: P) (pq: P → Q) (qr: Q → R): Q ∧ R:=
-begin
-  have q: Q,
-    exact pq p,
-  have r: R,
-    exact qr q,
-  exact ⟨q, r⟩,
-end
 
