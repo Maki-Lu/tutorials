@@ -23,7 +23,20 @@ begin
     exact q},
 end
 
-
+example (P Q R: Prop) (p_qr: P ∨ Q ∨ R): (P ∨ Q) ∨ R:=
+begin
+  cases p_qr with p qr,
+  { have pq: P ∨ Q,
+      left, exact p,
+    left, exact pq,
+  },
+  { cases qr with q r,
+    { have pq: P ∨ Q,
+        right, exact q,
+      left, exact pq},
+    { right, exact r},
+  },
+end
 
 
 
