@@ -50,5 +50,9 @@ begin
   exact p_qr p q,
 end
 
-
+example (P Q R: Prop)  (pq: P → Q) (qr: Q → R): P → R :=
+begin
+  intro p,
+  exact qr (pq p),
+end
 
