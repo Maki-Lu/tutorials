@@ -59,7 +59,7 @@ end
 
 example (P: ℝ → Prop) (npx: ¬ ∃ x, P x): ∀ x, ¬ P x :=
 begin
-  push_neg at npx,
+  push_neg at npx, /- 要求对npx这个式子化简 -/
   exact npx,
 end
 
@@ -68,4 +68,7 @@ begin
   push_neg at npx,
   exact npx,
 end
+
+
+
 
