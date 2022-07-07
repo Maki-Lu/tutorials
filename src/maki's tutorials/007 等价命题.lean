@@ -51,9 +51,9 @@ begin
   },
 end
 
-example (P Q R: Prop) (Hyp: P ↔ Q) (Hyp': Q ↔ R): P ↔ R:=
+example (P Q R: Prop) (Hyp: P ↔ Q) (Hyp': R ↔ P): Q ↔ R:=
 begin
-  rw Hyp,
+  rw ← Hyp, /- 表示代入反向的箭头 -/
   rw Hyp',
 end
 
@@ -61,9 +61,18 @@ end
 
 /- 练习题 -/
 
+example (P Q R S: Prop) (Hyp1: P ↔ Q) (Hyp2: R ↔ S) (Hyp3: S ↔ P): R ↔ Q:=
+begin
+  sorry
+end
 
+example (P Q R: Prop): ((P → Q) ∧ (P → R)) ↔  (P → (Q ∧ R)) :=
+begin
+  sorry,
+end
 
-
-
-
+example (P Q R: Prop): (P → (Q → R)) ↔  ((P ∧ Q ) → R) :=
+begin
+  sorry,
+end
 
