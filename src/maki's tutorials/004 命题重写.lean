@@ -51,7 +51,22 @@ end
 /- 练习题 -/
 
 
+example (x y z w: ℝ): x * ((y * z) * w) = (x * y) * (z * w) :=
+begin
+  sorry
+end
 
+/- 只用交换律 -/
+example (x y z w: ℝ): x * y * z * w = w * z * y * x :=
+begin
+  sorry
+end
+
+/- 既用交换律 也用结合律-/
+example (x y z w: ℝ): x * y * z * w = w * z * y * x :=
+begin
+  sorry
+end
 
 
 

@@ -60,11 +60,19 @@ end
 
 /- 练习题 -/
 
+example (P Q R: Prop)  (pqr: P → (Q → R)): Q → (P → R) :=
+begin
+  sorry
+end
 
+example (P Q R: Prop)  (qr: Q → R): (P → Q) → (P → R) :=
+begin
+  sorry
+end
 
-
-
-
-
+example (P Q R S: Prop): (P → Q) → (Q → R) → (R → S) → (P → S) :=
+begin
+  sorry
+end
 
 
