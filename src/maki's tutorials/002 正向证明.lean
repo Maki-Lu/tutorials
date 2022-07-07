@@ -39,3 +39,13 @@ begin
   exact qr q,
 end
 
+
+
+/- 练习题 -/
+
+
+
+
+
+
+

@@ -56,3 +56,15 @@ begin
   exact qr (pq p),
 end
 
+
+
+/- 练习题 -/
+
+
+
+
+
+
+
+
+
