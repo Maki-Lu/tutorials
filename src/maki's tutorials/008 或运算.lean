@@ -40,14 +40,23 @@ end
 
 
 
-
 /- 练习题 -/
 
 
+example (P Q: Prop) (pq: P ∧ Q): P ∨ Q:=
+begin
+  sorry,
+end
 
+example (P Q R: Prop) (pr: P → R) (qr: Q → R): (P ∨ Q) → R:=
+begin
+  sorry,
+end
 
-
-
+example (P Q R: Prop) (pqpr: (P → Q) ∨ (P → R)) : P → (Q ∨ R):=
+begin
+  sorry,
+end
 
 
 
