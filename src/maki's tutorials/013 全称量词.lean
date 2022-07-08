@@ -44,11 +44,19 @@ end
 
 /- 练习题 -/
 
+example (P: ℝ → ( ℝ → (ℝ → Prop))) (Pxy: ∀ x, ∀ y, ∀ z, P x y z): ∀ z, ∀ y, ∀ x, P x y z:=
+begin
+  sorry,
+end
 
+example (P: ℝ → Prop) (Hyp: ∀ x, (x > 0) → P x) : P 1 :=
+begin
+  sorry,
+end
 
-
-
-
-
+example (P: Prop) (Q: ℝ → Prop) (Hyp: ∀ x, P → Q x) : P → (∀ x, Q x) :=
+begin
+  sorry,
+end
 
 
