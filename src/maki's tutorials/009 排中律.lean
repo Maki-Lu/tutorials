@@ -31,12 +31,15 @@ end
 
 /- 练习题 -/
 
+example (P Q: Prop) (pqnpq: (P → Q) ∧ (¬ P → Q)): Q :=
+begin
+  sorry,
+end
 
-
-
-
-
-
+example (P Q R: Prop) (prqrnpqr: (P → R) ∧ (Q → R) ∧ (¬ (P ∨ Q) → R)): R :=
+begin
+  sorry,
+end
 
 
 
