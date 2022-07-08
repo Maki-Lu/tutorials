@@ -36,10 +36,25 @@ end
 
 
 
-/- 练习题 -/
+/- 用三种方法证明逆否命题的等价性 -/
 
+/- 方法一 -/
+example (P Q: Prop) (pq: P → Q): ¬ Q → ¬ P :=
+begin
+  sorry,
+end
 
+/- 方法二 -/
+example (P Q: Prop) (pq: P → Q): ¬ Q → ¬ P :=
+begin
+  sorry,
+end
 
+/- 方法三 -/
+example (P Q: Prop) (pq: P → Q): ¬ Q → ¬ P :=
+begin
+  sorry,
+end
 
 
 
