@@ -73,9 +73,16 @@ end
 
 /- 练习题 -/
 
+/- 用push_neg -/
+example (P: ℝ → (ℝ → Prop)) (Hyp: ∀ x, ∃ y, ¬ P x y): ¬ ∃ x, ∀ y, P x y:=
+begin
+  sorry,
+end
 
-
-
-
+/- 不用push_neg -/
+example (P: ℝ → (ℝ → Prop)) (Hyp: ∀ x, ∃ y, ¬ P x y): ¬ ∃ x, ∀ y, P x y:=
+begin
+  sorry,
+end
 
 

@@ -82,9 +82,15 @@ end
 
 /- 练习题 -/
 
+example: ∀ x : ℝ, ∀ y : ℝ, (x < y → (∃ z : ℝ, x < z ∧ z < y)) :=
+begin
+  sorry,
+end
 
-
-
+example: ∀ x : ℝ, (x > 0 → (∃ y : ℝ, y > 0 ∧ y < x)) :=
+begin
+  sorry,
+end
 
 
 
