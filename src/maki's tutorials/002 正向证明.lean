@@ -44,17 +44,17 @@ end
 
 example (P Q R: Prop)  (pqr: P → (Q → R)): Q → (P → R) :=
 begin
-  sorry
+  sorry,
 end
 
 example (P Q R: Prop)  (qr: Q → R): (P → Q) → (P → R) :=
 begin
-  sorry
+  sorry,
 end
 
 example (P Q R S: Prop): (P → Q) → (Q → R) → (R → S) → (P → S) :=
 begin
-  sorry
+  sorry,
 end
 
 

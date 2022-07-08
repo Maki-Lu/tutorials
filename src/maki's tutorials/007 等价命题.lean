@@ -63,7 +63,7 @@ end
 
 example (P Q R S: Prop) (Hyp1: P ↔ Q) (Hyp2: R ↔ S) (Hyp3: S ↔ P): R ↔ Q:=
 begin
-  sorry
+  sorry,
 end
 
 example (P Q R: Prop): ((P → Q) ∧ (P → R)) ↔  (P → (Q ∧ R)) :=
