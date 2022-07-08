@@ -77,14 +77,12 @@ end
 
 
 /- 练习题 -/
+/- 实在是没有好题出了，把这道题做出来就可以了 -/
 
-
-
-
-
-
-
-
+example (P Q: Prop) (pq: P ∨ Q) (np: ¬ P): Q :=
+begin
+  sorry,
+end
 
 
 
