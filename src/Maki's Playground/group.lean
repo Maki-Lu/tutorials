@@ -2,7 +2,6 @@ import data.real.basic
 
 def yx_xxy (A: set ℝ) := ∀ x y : A, y * x = x * x * y
 
-
 /- 命题重写 -/
 /- 示例
   （乘法结合律） mul_assoc a b c : a * b * c = a * (b * c)
