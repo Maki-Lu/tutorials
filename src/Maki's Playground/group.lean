@@ -1,6 +1,6 @@
 import data.real.basic
 
-def yx_xxy (A: set ℝ) := ∀ x y : A, y * x = x * x * y
+def yx_xxy (A: set ℝ) := ∀ x y : ℝ, (x ∈ A ∧ y ∈ A)→ x*y=y*x 
 
 /- 命题重写 -/
 /- 示例
@@ -11,10 +11,15 @@ def yx_xxy (A: set ℝ) := ∀ x y : A, y * x = x * x * y
 
 /-instance : semigroup A          := by apply_instance-/
 
-example (A: set ℝ) (hyp: yx_xxy A) (x y: ℝ): (x ∈ A ∧ y ∈ A) →  y * x = x * x * y := /-x * x * y * y * x * x * y * y = x * y :=-/
+universes u v
+variables {G : Type u} {H : Type v}
+
+class special (G: Type u) [group G] : Prop := (haha: ∀ x y: G, x*y=y*x)
+
+def ab [group G] := ∀ x y: G, x*y=y*x
+
+example [group G] [sg: special G] (x y: G): x*y=y*x :=
 begin
-  rintro ⟨hx, hy⟩,
-  
   
 end
 
