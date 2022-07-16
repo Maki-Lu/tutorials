@@ -1,7 +1,5 @@
 import data.real.basic
 
-
-
 def yx_xxy (A: set ℝ) := ∀ x y : A, y * x = x * x * y
 
 
@@ -17,7 +15,7 @@ def yx_xxy (A: set ℝ) := ∀ x y : A, y * x = x * x * y
 example (A: set ℝ) (hyp: yx_xxy A) (x y: ℝ): (x ∈ A ∧ y ∈ A) →  y * x = x * x * y := /-x * x * y * y * x * x * y * y = x * y :=-/
 begin
   rintro ⟨hx, hy⟩,
-  rw yx_xxy 
+  
   
 end
 
